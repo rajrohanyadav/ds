@@ -2,22 +2,35 @@ package ds
 
 import "fmt"
 
+const (
+	ERROR_EMPTY_STACK = "stack is empty"
+	ERROR_OVERFLOW = "overflow"
+	ERROR_UNDERFLOW = "underflow"
+)
+
 type Stack struct {
 	top int
 	size int
 	data []int
 }
 
-func NewDefaultStack() *Stack {
+func NewStack(size int) *Stack {
 	return &Stack{
-		top: 0,
-		size: 10,
-		data: make([]int, 10),
+		top: -1,
+		size: size,
+		data: make([]int, size),
 	}
 }
 
-func (s Stack) Top() int {
-	return s.data[s.top]
+func NewDefaultStack() *Stack {
+	return NewStack(10)
+}
+
+func (s Stack) Top() (int, error) {
+	if s.top < 0 {
+		return 0, fmt.Errorf(ERROR_EMPTY_STACK)
+	}
+	return s.data[s.top], nil
 }
 
 func (s *Stack) Push(val int) error {
