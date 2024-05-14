@@ -8,32 +8,34 @@ const (
 	ERROR_UNDERFLOW = "underflow"
 )
 
-type Stack struct {
-	top int
+type Stack[T any] struct {
+	top int 
 	size int
-	data []int
+	data []T
 }
 
-func NewStack(size int) *Stack {
-	return &Stack{
+func NewStack[T any](size int) *Stack[T] {
+	return &Stack[T]{
 		top: -1,
 		size: size,
-		data: make([]int, size),
+		data: make([]T, size),
 	}
 }
 
-func NewDefaultStack() *Stack {
-	return NewStack(10)
+func NewDefaultStack[T any]() *Stack[T] {
+	return NewStack[T](10)
 }
 
-func (s Stack) Top() (int, error) {
+func (s Stack[T]) Top() (T, error) {
+	var ret T
 	if s.top < 0 {
-		return 0, fmt.Errorf(ERROR_EMPTY_STACK)
+		return ret, fmt.Errorf(ERROR_EMPTY_STACK)
 	}
-	return s.data[s.top], nil
+	ret = s.data[s.top]
+	return ret, nil
 }
 
-func (s *Stack) Push(val int) error {
+func (s *Stack[T]) Push(val T) error {
 	if s.top + 1 == s.size {
 		return fmt.Errorf("Overflow")
 	}
@@ -42,7 +44,7 @@ func (s *Stack) Push(val int) error {
 	return nil
 }
 
-func (s *Stack) Pop() error {
+func (s *Stack[T]) Pop() error {
 	if s.top == 0 {
 		return fmt.Errorf("Underflow")
 	}
