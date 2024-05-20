@@ -15,6 +15,7 @@ func TestStackIntegerT(t *testing.T) {
 		size int
 		pushes []int
 		expected int
+		expectedIsEmpty bool
 		expectedError error
 	}{
 		{
@@ -22,6 +23,7 @@ func TestStackIntegerT(t *testing.T) {
 			size: 0,
 			pushes: []int{2,5,3,4},
 			expected: 4,
+			expectedIsEmpty: false,
 			expectedError: nil,	
 		},
 		{
@@ -29,6 +31,7 @@ func TestStackIntegerT(t *testing.T) {
 			size: 5,
 			pushes: []int{2,5,3,4},
 			expected: 4,
+			expectedIsEmpty: false,
 			expectedError: nil,
 		},
 		{
@@ -36,6 +39,7 @@ func TestStackIntegerT(t *testing.T) {
 			size: 5,
 			pushes: []int{},
 			expected: 0,
+			expectedIsEmpty: true,
 			expectedError: fmt.Errorf(ERROR_EMPTY_STACK),
 		},
 	}
@@ -53,6 +57,7 @@ func TestStackIntegerT(t *testing.T) {
 			result, err := st.Top()
 			assert.Equal(tt, test.expected, result)
 			assert.Equal(tt, test.expectedError, err)
+			assert.Equal(tt, test.expectedIsEmpty, st.IsEmpty())
 		})
 	}
 }
@@ -63,6 +68,7 @@ func TestStackFloatT(t *testing.T) {
 		size int
 		pushes []float32
 		expected float32
+		expectedIsEmpty bool
 		expectedError error
 	}{
 		{
@@ -70,6 +76,7 @@ func TestStackFloatT(t *testing.T) {
 			size: 0,
 			pushes: []float32{2.2,5.23,3.234,4.342},
 			expected: 4.342,
+			expectedIsEmpty: false,
 			expectedError: nil,	
 		},
 		{
@@ -77,6 +84,7 @@ func TestStackFloatT(t *testing.T) {
 			size: 5,
 			pushes: []float32{2,5,3,4},
 			expected: 4,
+			expectedIsEmpty: false,
 			expectedError: nil,
 		},
 		{
@@ -84,6 +92,7 @@ func TestStackFloatT(t *testing.T) {
 			size: 5,
 			pushes: []float32{},
 			expected: 0,
+			expectedIsEmpty: true,
 			expectedError: fmt.Errorf(ERROR_EMPTY_STACK),
 		},
 	}
@@ -101,6 +110,7 @@ func TestStackFloatT(t *testing.T) {
 			result, err := st.Top()
 			assert.Equal(tt, test.expected, result)
 			assert.Equal(tt, test.expectedError, err)
+			assert.Equal(tt, test.expectedIsEmpty, st.IsEmpty())
 		})
 	}
 }
@@ -111,6 +121,7 @@ func TestStackStringT(t *testing.T) {
 		size int
 		pushes []string
 		expected string 
+		expectedIsEmpty bool
 		expectedError error
 	}{
 		{
@@ -118,6 +129,7 @@ func TestStackStringT(t *testing.T) {
 			size: 0,
 			pushes: []string{"hello", "world"},
 			expected: "world",
+			expectedIsEmpty: false,
 			expectedError: nil,	
 		},
 		{
@@ -125,6 +137,7 @@ func TestStackStringT(t *testing.T) {
 			size: 5,
 			pushes: []string{"2", "5", "5", "4"},
 			expected: "4",
+			expectedIsEmpty: false,
 			expectedError: nil,
 		},
 		{
@@ -132,6 +145,7 @@ func TestStackStringT(t *testing.T) {
 			size: 5,
 			pushes: []string{},
 			expected: "",
+			expectedIsEmpty: true,
 			expectedError: fmt.Errorf(ERROR_EMPTY_STACK),
 		},
 	}
@@ -149,6 +163,7 @@ func TestStackStringT(t *testing.T) {
 			result, err := st.Top()
 			assert.Equal(tt, test.expected, result)
 			assert.Equal(tt, test.expectedError, err)
+			assert.Equal(tt, test.expectedIsEmpty, st.IsEmpty())
 		})
 	}
 }
@@ -158,13 +173,15 @@ func TestStackInterfaceT(t *testing.T) {
 		testName string
 		size int
 		pushes []interface{}
-		expected interface{} 
+		expected interface{}
+		expectedIsEmpty bool 
 		expectedError error
 	}{
 		{
 			testName: "default stack",
 			size: 0,
 			pushes: []interface{}{"hello", "world"},
+			expectedIsEmpty: false,
 			expected: "world",
 			expectedError: nil,	
 		},
@@ -173,6 +190,7 @@ func TestStackInterfaceT(t *testing.T) {
 			size: 5,
 			pushes: []interface{}{2, "5", "5", 4},
 			expected: 4,
+			expectedIsEmpty: false,
 			expectedError: nil,
 		},
 		{
@@ -180,6 +198,7 @@ func TestStackInterfaceT(t *testing.T) {
 			size: 5,
 			pushes: []interface{}{},
 			expected: nil,
+			expectedIsEmpty: true,
 			expectedError: fmt.Errorf(ERROR_EMPTY_STACK),
 		},
 	}
@@ -197,6 +216,7 @@ func TestStackInterfaceT(t *testing.T) {
 			result, err := st.Top()
 			assert.Equal(tt, test.expected, result)
 			assert.Equal(tt, test.expectedError, err)
+			assert.Equal(tt, test.expectedIsEmpty, st.IsEmpty())
 		})
 	}
 }

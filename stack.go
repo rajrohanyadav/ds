@@ -51,3 +51,7 @@ func (s *Stack[T]) Pop() error {
 	s.top--
 	return nil
 }
+
+func (s *Stack[T]) IsEmpty() bool {
+	return s.top < 0
+}
